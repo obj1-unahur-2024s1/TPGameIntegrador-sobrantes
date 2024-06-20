@@ -85,7 +85,7 @@ object juego {
 		,cartelPistaAct=new CartelPista()
 		,puertaAnt=new PuertaAnt(position=game.at(1,1)))
 		//LISTO: NIVEL QUE SE DEBE PASAR POR LA PUERTA ANTERIOR
-		method nivel7()= new NivelPerInvisible(perAct= new PerGral(imagen="tipitoDer.png",position=game.at(2,1)),
+		method nivel7()= new NivelComun(perAct= new PerGral(imagen="tipitoDer.png",position=game.at(2,1)),
 		botAct=new BotGral( imagen="boton0.png", position =game.at(1,7)),
 		puertaAct=new PuertaSiempreAbierta(imagen="puerta1.png", position=game.at(1,1)),
 		nivelID= 7,
@@ -93,7 +93,7 @@ object juego {
 		,cartelPistaAct=new CartelPista()
 		,puertaAnt=new PuertaAnt(position=game.at(14,3)))
 		//LISTO: NIVEL PERSONAJE INVISIBLE
-	method nivel6()= new NivelComun(perAct= new PerInvisble(imagen="tipitoDer.png",position=game.at(2,1)),
+	method nivel6()= new NivPerInvisible(perAct= new PerInvisble(imagen="tipitoDer.png",position=game.at(2,1)),
 		botAct=new BotGral( imagen="boton0.png", position =game.at(1,7)),
 		puertaAct=new PuertaGral(imagen="puerta0.png", position=game.at(14,3)),
 		nivelID= 6,
@@ -175,4 +175,7 @@ object juego {
 		
 		
 	
+//niv 3 ver cartel
+//niv 8 apenas empieza nivel
+//niv 7 arreglar tipito que agregue cartel
 

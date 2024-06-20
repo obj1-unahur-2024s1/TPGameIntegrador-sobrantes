@@ -114,7 +114,7 @@ class NivelPista inherits NivelComun{
 
 //Se modificó el orden de addVisuals de los objetos para que las cajas queden detrás del tablero y así dar una sensación de invisibilidad
 class NivelCajasInvisibles inherits NivelComun{
-override method objetos()=[tablero,botAct,puertaAct,puertaAnt,perAct,cartelPistaAct,tiempoU,tiempoD,tiempoC,tiempoM]
+override method objetos()=[tablero,new CartelNivel(),botAct,puertaAct,puertaAnt,perAct,cartelPistaAct,tiempoU,tiempoD,tiempoC,tiempoM]
 override method estructuraNivel(){
 self.movimiento(perAct)
 self.pista()
@@ -125,6 +125,8 @@ self.pasarDeNivel()
 }
 
 
-class NivelPerInvisible inherits NivelComun{
-	override method pista(){super() self.perAct().mensajeDondeEsta()}
+class NivPerInvisible inherits NivelComun{
+	override method estructuraNivel(){super() 
+		keyboard.p().onPressDo{self.perAct().desahcerInv()}     //{game.say(self.perAct(),"Aca Estoy")}
+	}
 }

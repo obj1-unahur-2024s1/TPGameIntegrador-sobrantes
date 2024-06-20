@@ -56,8 +56,8 @@ class PerInvisble inherits PerGral{
 	override method  animarIzq(){imagen=invisible}
 	override method animarArriba(){imagen=invisible}
 	override method animarAbajo(){imagen=invisible}
-	method mensajeDondeEsta(){game.say(self,"Aca Estoy")}
-}	
+	method desahcerInv(){imagen="tipitoDer.png"}
+	}
 
 //CLASE DE BOTON STANDARD 
 class BotGral inherits ObjGral{
