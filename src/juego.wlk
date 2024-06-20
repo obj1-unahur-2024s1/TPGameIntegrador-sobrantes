@@ -1,37 +1,41 @@
 import wollok.game.*
-import example.*
+import niveles.*
+import objetos.*
+
+
+
+//OBJETO QUE CONTIENE EL JUEGO Y SUS ESTRUCTURAS
 object juego {
 	
-	const property niveles=[]
-	var property nivel=0	
-	var property inicie = false
+	const property niveles=[]//Lista con todos los niveles
+	var property nivel=0	//Numero de nivel actual
+	var property inicie = false//Bandera utilizada para saber si ya inicé el juego o no
 
 	
-	method nivelAct()= niveles.find{n=>n.nivelID()==nivel}
-	method pasarSiguienteNivel(){			
+	method nivelAct()= niveles.find{n=>n.nivelID()==nivel}//Retorna el nivel actual
+	method pasarSiguienteNivel(){ //Saca el nivel actual y pone el siguiente y si no hay siguiente finaliza el juego			
 			nivel+=1
 			game.clear()
 			
 			if(nivel== niveles.size()){self.finalizar()}else{self.ponerNivel(niveles.find{n=>n.nivelID()==nivel})}
 			}
 	
-	method finalizar(){game.clear()}
-	method ponerNivel(niv){
+	method finalizar(){game.clear()}//Finaliza el juego *TERMINAR*
+	method ponerNivel(niv){ //Pone el nivel en pantalla que se le pase por parametro
 		
-		niv.objetos().forEach{o=>game.addVisual(o)}
-		game.addVisual(self.cartelActual())
-		self.nivelAct().estructuraNivel()
-		segundero.comenzarSegundero()
+		niv.objetos().forEach{o=>game.addVisual(o)}//Se agregan los objetos del nivel
+		self.nivelAct().estructuraNivel()//Se define la estructura del nivel actual
+		segundero.comenzarSegundero()//se agrega y comienza el segundero
 	}
 
 	
-	method agregarNivel(nuevoNivel){
+	method agregarNivel(nuevoNivel){ // Agrega el nivel pasado por parámetro a la lista de niveles
 		niveles.add(nuevoNivel)
 	}
-	method cartelActual()=new CartelNivel()
 	
 	
 	
+	//LISTO: NIVEL COMUN
 	method nivel0()= new NivelComun(perAct= new PerGral(imagen="tipitoDer.png",position=game.at(2,1)),
 		botAct=new BotGral( imagen="boton0.png", position =game.at(1,7)),
 		puertaAct=new PuertaGral(imagen="puerta0.png", position=game.at(14,3)),
@@ -39,8 +43,8 @@ object juego {
 		teclas=new BotonesParaMover(izquierda=keyboard.a(),derecha=keyboard.d(),arriba=keyboard.w(),abajo=keyboard.s())
 		,cartelPistaAct=new CartelPista()
 		,puertaAnt=new PuertaAnt(position=game.at(1,1)))
-		//LISTO: NIVEL COMUN
 		
+		//LISTO:NIVEL COMUN, PERO LOS MOVIMIENTOS SON CON LAS FLECHAS
 		method nivel1()= new NivelComun(perAct= new PerGral(imagen="tipitoDer.png",position=game.at(2,1)),
 		botAct=new BotGral(imagen="boton0.png",position =game.at(1,7)),
 		puertaAct=new PuertaGral(imagen="puerta0.png", position=game.at(14,3)),
@@ -48,7 +52,7 @@ object juego {
 		teclas=new BotonesParaMover(izquierda=keyboard.left(),derecha=keyboard.right(),arriba=keyboard.up(),abajo=keyboard.down())
 		,cartelPistaAct=new CartelPista()
 		,puertaAnt=new PuertaAnt(position=game.at(1,1)))
-		//LISTO:NIVEL COMUN, PERO LOS MOVIMIENTOS SON CON LAS FLECHAS
+		//LISTO:NIVEL CON LOS OBJETOS INVISIBLES
 	method nivel2()= new NivelCajasInvisibles(perAct= new PerGral(imagen="tipitoDer.png",position=game.at(2,1)),
 		botAct=new BotonInvisible(imagen="objInvisible.png",position =game.at(1,7)),
 		puertaAct=new PuertaInvisible(imagen="objInvisible.png", position=game.at(14,3)),
@@ -56,7 +60,7 @@ object juego {
 		teclas=new BotonesParaMover(izquierda=keyboard.a(),derecha=keyboard.d(),arriba=keyboard.w(),abajo=keyboard.s())
 		,cartelPistaAct=new CartelPista()
 		,puertaAnt=new PuertaAnt(position=game.at(1,1)))
-		//LISTO:NIVEL CON LOS OBJETOS INVISIBLES(FALTA PISTA)
+		//LISTO: NIVEL QUE SE MUEVEN LA PUERTA Y EL BOTON
 	method nivel3()= new NivelSeMuevenSoloObj(perAct= new PerInvisble(imagen="tipitoDer.png",position=game.at(2,1)),
 		botAct=new BotGral( imagen="boton0.png", position =game.at(1,7)),
 		puertaAct=new PuertaGral(imagen="puerta0.png", position=game.at(14,3)),
@@ -64,6 +68,7 @@ object juego {
 		teclas=new BotonesParaMover(izquierda=keyboard.a(),derecha=keyboard.d(),arriba=keyboard.w(),abajo=keyboard.s())
 		,cartelPistaAct=new CartelPista()
 		,puertaAnt=new PuertaAnt(position=game.at(1,1)))
+		//LISTO: NIVEL CON LA PUERTA ABIERTA QUE SE CIERRA SI LO APRETAS
 		method nivel4()= new NivelComun(perAct= new PerGral(imagen="tipitoDer.png",position=game.at(2,1)),
 		botAct=new BotGral( imagen="boton0.png", position =game.at(1,7)),
 		puertaAct=new PuertaAbierta(imagen="puerta1.png", position=game.at(14,3)),
@@ -71,6 +76,7 @@ object juego {
 		teclas=new BotonesParaMover(izquierda=keyboard.a(),derecha=keyboard.d(),arriba=keyboard.w(),abajo=keyboard.s())
 		,cartelPistaAct=new CartelPista()
 		,puertaAnt=new PuertaAnt(position=game.at(1,1)))
+		//LISTO NIVEL CON LAS TECLAS Y LOS APSECTOS DE LOS OBJETOS CAMBIADOS
 		method nivel5()= new NivelComun(perAct= new PerGral(imagen="tipitoDer.png",position=game.at(2,1)),
 		botAct=new BotonPuerta( imagen="puerta0.png", position =game.at(1,7)),
 		puertaAct=new PuertaBoton(imagen="boton0.png", position=game.at(14,3)),
@@ -78,14 +84,15 @@ object juego {
 		teclas=new BotonesParaMover(izquierda=keyboard.d(),derecha=keyboard.a(),arriba=keyboard.s(),abajo=keyboard.w())
 		,cartelPistaAct=new CartelPista()
 		,puertaAnt=new PuertaAnt(position=game.at(1,1)))
-		method nivel7()= new NivelComun(perAct= new PerGral(imagen="tipitoDer.png",position=game.at(2,1)),
+		//LISTO: NIVEL QUE SE DEBE PASAR POR LA PUERTA ANTERIOR
+		method nivel7()= new NivelPerInvisible(perAct= new PerGral(imagen="tipitoDer.png",position=game.at(2,1)),
 		botAct=new BotGral( imagen="boton0.png", position =game.at(1,7)),
 		puertaAct=new PuertaSiempreAbierta(imagen="puerta1.png", position=game.at(1,1)),
 		nivelID= 7,
 		teclas=new BotonesParaMover(izquierda=keyboard.a(),derecha=keyboard.d(),arriba=keyboard.w(),abajo=keyboard.s())
 		,cartelPistaAct=new CartelPista()
 		,puertaAnt=new PuertaAnt(position=game.at(14,3)))
-		//LISTO 
+		//LISTO: NIVEL PERSONAJE INVISIBLE
 	method nivel6()= new NivelComun(perAct= new PerInvisble(imagen="tipitoDer.png",position=game.at(2,1)),
 		botAct=new BotGral( imagen="boton0.png", position =game.at(1,7)),
 		puertaAct=new PuertaGral(imagen="puerta0.png", position=game.at(14,3)),
@@ -93,7 +100,7 @@ object juego {
 		teclas=new BotonesParaMover(izquierda=keyboard.a(),derecha=keyboard.d(),arriba=keyboard.w(),abajo=keyboard.s())
 		,cartelPistaAct=new CartelPista()
 		,puertaAnt=new PuertaAnt(position=game.at(1,1)))
-		//LISTO
+		//LISTO: NIVEL QUE SE PASA REINICIANDO EL NIVEL
 		method nivel8()= new NivelComun(perAct= new PerGral(imagen="tipitoDer.png",position=game.at(2,1)),
 		botAct=new BotGral( imagen="boton0.png", position =game.at(1,7)),
 		puertaAct=new PuertaReinicio(imagen="puerta0.png", position=game.at(14,3)),
@@ -101,6 +108,7 @@ object juego {
 		teclas=new BotonesParaMover(izquierda=keyboard.a(),derecha=keyboard.d(),arriba=keyboard.w(),abajo=keyboard.s())
 		,cartelPistaAct=new CartelPista()
 		,puertaAnt=new PuertaAnt(position=game.at(1,1)))
+		//LISTO NIVEL QUE SE PASA TOCANDO EL BOTON DEL CARTEL
 		method nivel9()=new NivelAlto(perAct= new PerGral(imagen="tipitoDer.png",position=game.at(2,1)),
 		botAct=new BotGral( imagen="boton0.png", position =game.at(6,10)),
 		puertaAct=new PuertaGral(imagen="puerta0.png", position=game.at(14,3)),
@@ -108,6 +116,7 @@ object juego {
 		teclas=new BotonesParaMover(izquierda=keyboard.a(),derecha=keyboard.d(),arriba=keyboard.w(),abajo=keyboard.s())
 		,cartelPistaAct=new CartelPista()
 		,puertaAnt=new PuertaAnt(position=game.at(1,1)))
+		//LISTO: NIVEL  QUE SE PASA PIDIENDO PISTA
 		method nivel10()=new NivelPista(perAct= new PerGral(imagen="tipitoDer.png",position=game.at(2,1)),
 		botAct=new BotGral( imagen="boton0.png", position =game.at(6,10)),
 		puertaAct=new PuertaGral(imagen="puerta0.png", position=game.at(14,3)),
@@ -115,7 +124,8 @@ object juego {
 		teclas=new BotonesParaMover(izquierda=keyboard.a(),derecha=keyboard.d(),arriba=keyboard.w(),abajo=keyboard.s())
 		,cartelPistaAct=new CartelPista()
 		,puertaAnt=new PuertaAnt(position=game.at(1,1)))
-	method agregarNiveles(){
+	
+	method agregarNiveles(){//Se agregan los niveles a la lista de niveles
 		self.agregarNivel(self.nivel0())
 		self.agregarNivel(self.nivel1())
 		self.agregarNivel(self.nivel2())
@@ -129,7 +139,7 @@ object juego {
 		self.agregarNivel(self.nivel10())
 	}
 
-	method inicio(){
+	method inicio(){ //Estructura de la pantalla de inicio
 		
 		game.addVisual(fondoInicio)
 		game.addVisual(teclasInicio)
@@ -152,16 +162,16 @@ object juego {
 			
 			}
 		
-		method jugar(){
-		self.agregarNiveles()
-		self.ponerNivel(self.nivelAct())
-		if (self.nivelAct().condicionesParaPasarDeNivel()){self.pasarSiguienteNivel()}
-		}	
 		method iniciar(){
 		self.inicio()
 		if(not inicie){keyboard.enter().onPressDo{game.clear() self.jugar() inicie=true}}
-		}		
-		}
+		}//Se inicia el juego si se apreta enter por primera vez	
+		method jugar(){
+		self.agregarNiveles()//Se agregan los niveles
+		self.ponerNivel(self.nivelAct())//Se pone el primer nivel
+		if (self.nivelAct().condicionesParaPasarDeNivel()){self.pasarSiguienteNivel()}
+		}}	//Si estan las condiciones para pasar de nivel se pasa al siguiente
+		
 		
 		
 	

@@ -1,6 +1,7 @@
 import wollok.game.*
-import example.*
-import objects.*
+import juego.*
+import objetos.*
+import niveles.*
 program game {
 	game.boardGround("back.jpg")
 	game.width(16)
