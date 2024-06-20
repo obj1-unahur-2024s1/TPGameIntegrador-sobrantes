@@ -230,7 +230,7 @@ const property position =game.at(1,9)
 //Cartel que contiene la pista y el metodo para pedir la misma
 class CartelPista{
 	var imagen="pistaSinPedir.png"
-	var property pistaPedida=false
+	var  pistaPedida=false
 	
 	const property position =game.at(11,9)
 	
@@ -238,6 +238,7 @@ method pedirPista(){
 	imagen="pista"+juego.nivel()+".png"
 	pistaPedida = true
 }
+method pistaPedida()=pistaPedida
 method image()=imagen
 }
 
@@ -297,22 +298,15 @@ object segundero{
 	method comenzarSegundero(){
 	
 	game.onTick(1000,"pasarSegundo",{
-		game.removeVisual(tiempoU)
-		game.removeVisual(tiempoD)
-		game.removeVisual(tiempoC)
-		game.removeVisual(tiempoM)
 		segundos=segundos+1
 		tiempoU.newImagen(segundos%10)
 		tiempoD.newImagen(((segundos/10)%10).truncate(0))
 		tiempoC.newImagen(((segundos/100)%10).truncate(0))
 		tiempoM.newImagen(((segundos/1000)%10).truncate(0))
-		game.addVisual(tiempoU)
-		game.addVisual(tiempoD)
-		game.addVisual(tiempoC)
-		game.addVisual(tiempoM)
+
 		
 		})}
-		
+	method segundos()=segundos	
 	}
 
  //PANTALLA DE INICIO
@@ -344,3 +338,156 @@ object teclasInicio{
 method position()= game.at(0,0)
 method image()= "teclas.png"
 }
+
+
+object contPistas{
+	var cantPistas=0
+	method sumarPista(){cantPistas+=1}
+	method pistasTotales() = cantPistas
+}	
+object contReset{
+	var cantReset=0
+	method sumarReset(){cantReset+=1}
+	method resetTotales() = cantReset
+}	
+
+
+
+object final{
+	const medallas =[new MedallaTiempo(tiempo=segundero.segundos()),new MedallaResets(resets=contReset.resetTotales()),new MedallaPistas(pistas=contPistas.pistasTotales())]
+	
+	method mostrarTiempo(){
+		game.addVisual(new FinalTiempU(tiem=segundero.segundos()))
+		game.addVisual(new FinalTiempD(tiem=segundero.segundos()))
+		game.addVisual(new FinalTiempC(tiem=segundero.segundos()))
+		game.addVisual(new FinalTiempM(tiem=segundero.segundos()))
+		//game.addVisual(new MedallaTiempo(tiempo=segundero.segundos()))
+	}
+	method mostrarReset(){
+		game.addVisual(new FinalResetsU(resets=contReset.resetTotales()))
+		game.addVisual(new FinalResetsD(resets=contReset.resetTotales()))
+		//game.addVisual(new MedallaResets(resets=contReset.resetTotales()))
+	}
+	method mostrarPistas() {
+		game.addVisual(new FinalPistasU(pistas=contPistas.pistasTotales()))
+		game.addVisual(new FinalPistasD(pistas=contPistas.pistasTotales()))
+		//game.addVisual(new MedallaPistas(pistas=contPistas.pistasTotales()))
+	}
+	method agregarMedallas(){medallas.forEach{m=>game.addVisual(m)}}
+	method agregarPantallaFinal(){
+		var fotograma=0
+		const trofeo = medallas.sum{m=>m.color()}
+		var pantallaFinal=new PantallaFinal(fotog=fotograma,trof=trofeo)
+		game.addVisual(	pantallaFinal)
+		game.onTick(100,"animarFinal",{
+			fotograma=fotograma+1
+			pantallaFinal.newImagen(fotograma)
+		})
+		
+	}
+}
+
+
+class FinalTiempU{
+	var tiem
+	const property position=game.at(0,0)
+	const property image="finalTiempoU"+ tiem%10 + ".png"
+}
+
+class FinalTiempD{
+	var tiem
+	const property position=game.at(0,0)
+	const property image="finalTiempoD"+ ((tiem/10)%10).truncate(0) + ".png"
+}	
+class FinalTiempC{
+	var tiem
+	const property position=game.at(0,0)
+	const property image="finalTiempoC"+ ((tiem/100)%10).truncate(0) + ".png"
+}
+
+class FinalTiempM{
+	var tiem
+	const property position=game.at(0,0)
+	const property image="finalTiempoM"+ ((tiem/1000)%10).truncate(0) + ".png"
+}		
+class FinalPistasU{
+	var pistas
+	const property position=game.at(0,0)
+	const property image="finalPistasU"+ pistas%10 + ".png"
+}
+
+class FinalPistasD{
+	var pistas
+	const property position=game.at(0,0)
+	const property image="finalPistasD"+ ((pistas/10)%10).truncate(0) + ".png"
+}
+
+class FinalResetsU{
+	var resets
+	const property position=game.at(0,0)
+	const property image="finalResetU"+ resets%10 + ".png"
+}
+
+
+class FinalResetsD{
+	var resets
+	const property position=game.at(0,0)
+	const property image="finalResetD"+ ((resets/10)%10).truncate(0) + ".png"
+}
+
+class PantallaFinal{
+	const fotog
+	const trof
+	var property imagen= "final"+fotog%6+"trofeo"+self.trofeo()+".png"
+	
+	
+	const property position=game.at(0,0)
+	
+	method newImagen(nueva){imagen ="final"+nueva%6+"trofeo"+self.trofeo()+".png"}
+	method image()=imagen
+	method trofeo(){
+		if (trof>7){return 3}
+		if (trof>4){return 2}
+		return 1
+	}
+	 
+}
+
+
+class MedallaTiempo{
+	var tiempo
+	const property image= "MedallaTiempo"+self.color()+".png"
+	const property position=game.at(0,0)
+	
+	method color(){
+		if (tiempo<1500){return 1}
+		if (tiempo<5000){return 2}
+		return 3 
+	}
+}
+
+class MedallaPistas{
+	var pistas
+	const property image= "MedallaPistas"+self.color()+".png"
+	const property position=game.at(0,0)
+	
+	method color(){
+		if (pistas<5){return 1}
+		if (pistas<8){return 2}
+		return 3 
+	}
+}
+
+class MedallaResets{
+	var resets
+	const property image= "MedallaResets"+self.color()+".png"
+	const property position=game.at(0,0)
+	
+	method color(){
+		if (resets<4){return 1}
+		if (resets<8){return 2}
+		return 3 
+	}
+}
+
+

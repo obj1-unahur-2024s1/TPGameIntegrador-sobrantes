@@ -16,11 +16,21 @@ object juego {
 	method pasarSiguienteNivel(){ //Saca el nivel actual y pone el siguiente y si no hay siguiente finaliza el juego			
 			nivel+=1
 			game.clear()
-			
+
 			if(nivel== niveles.size()){self.finalizar()}else{self.ponerNivel(niveles.find{n=>n.nivelID()==nivel})}
 			}
 	
-	method finalizar(){game.clear()}//Finaliza el juego *TERMINAR*
+	method finalizar(){
+		game.clear()
+		game.addVisual(tablero)
+		final.mostrarTiempo()
+		final.mostrarPistas()
+		final.mostrarReset()
+		final.agregarMedallas()
+		final.agregarPantallaFinal()
+		
+		
+	}//Finaliza el juego *TERMINAR*
 	method ponerNivel(niv){ //Pone el nivel en pantalla que se le pase por parametro
 		
 		niv.objetos().forEach{o=>game.addVisual(o)}//Se agregan los objetos del nivel
@@ -138,27 +148,28 @@ object juego {
 		self.agregarNivel(self.nivel9())
 		self.agregarNivel(self.nivel10())
 	}
-
+	
+	
+	
 	method inicio(){ //Estructura de la pantalla de inicio
-		
 		game.addVisual(fondoInicio)
 		game.addVisual(teclasInicio)
 		var fotograma=0
 		game.addVisual(pantallaInicio)
-		game.onTick(300,"cambioInicio",{
-			game.removeVisual(pantallaInicio)
+		game.onTick(200,"cambioInicio",{
+			fotograma +=1
+			
 			pantallaInicio.newImagen(fotograma)
-			game.addVisual(pantallaInicio)
-			fotograma +=1})
+			})
 			
 			var fotogramaStart=0
 			game.addVisual(start)
 			game.onTick(125,"cambioStart",{
-				game.removeVisual(start)
+				//game.removeVisual(start)
+				fotogramaStart+=1
 				start.newImagen(fotogramaStart)
-				game.addVisual(start)
-				fotogramaStart+=1})
-				
+				//game.addVisual(start)
+				})
 			
 			}
 		

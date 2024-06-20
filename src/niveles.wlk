@@ -48,7 +48,7 @@ method dibujarCajas(){//dibuja las cajas en las posiciones de la lista
 	
 	}
 method pista(){
-	keyboard.p().onPressDo({cartelPistaAct.pedirPista()})
+	keyboard.p().onPressDo({if (not cartelPistaAct.pistaPedida()){contPistas.sumarPista()} cartelPistaAct.pedirPista() })
 }//Si apretas p se pide la pista
 method pasarDeNivel(){
 game.whenCollideDo(puertaAct,{o=>if(o.puedeTocarPuerta()and self.condicionesParaPasarDeNivel()){juego.pasarSiguienteNivel()}})
@@ -66,7 +66,7 @@ self.movimiento(perAct)
 self.pista()
 game.whenCollideDo(self.botAct(),{o=>if(o.puedeTocarBoton()){self.botAct().cambiarEstado() self.puertaAct().cambiarEstado()}})
 self.pasarDeNivel()
-keyboard.r().onPressDo({self.resetNivel()})
+keyboard.r().onPressDo({self.resetNivel() contReset.sumarReset()})
 }
 method objetos()=[tablero,botAct,new CartelNivel(),puertaAct,puertaAnt,perAct,cartelPistaAct,tiempoU,tiempoC,tiempoD,tiempoM]//objetos que contiene el juego y se va a geregar	
 }
@@ -109,7 +109,7 @@ override method movimiento(obj){
 }
 //Se modificó para que al pedir la pista la puerta cambie de estado.
 class NivelPista inherits NivelComun{
-	override method pista(){keyboard.p().onPressDo({cartelPistaAct.pedirPista() self.puertaAct().cambiarEstado()})}
+	override method pista(){keyboard.p().onPressDo({cartelPistaAct.pedirPista() self.puertaAct().cambiarEstado() contPistas.sumarPista()})}
 }
 
 //Se modificó el orden de addVisuals de los objetos para que las cajas queden detrás del tablero y así dar una sensación de invisibilidad
@@ -130,3 +130,7 @@ class NivPerInvisible inherits NivelComun{
 		keyboard.p().onPressDo{self.perAct().desahcerInv()}     //{game.say(self.perAct(),"Aca Estoy")}
 	}
 }
+
+
+
+
