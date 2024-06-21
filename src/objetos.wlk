@@ -491,3 +491,17 @@ class MedallaResets{
 }
 
 
+object sonido{
+	const musica = game.sound("musica.mp3")
+	var detenida= false
+	var primeraVez=true
+	method iniciar(){
+	musica.shouldLoop(true)
+	musica.volume(0.2)
+	if(primeraVez){
+		game.schedule(500, { musica.play()}) primeraVez=false
+		keyboard.m().onPressDo({if(detenida){self.reanudar()}else{self.detener()}})
+	}else{keyboard.m().onPressDo({if(detenida){self.reanudar()}else{self.detener()}})}}
+	method detener(){musica.pause() detenida = true}
+	method reanudar(){musica.resume() detenida = false}
+}

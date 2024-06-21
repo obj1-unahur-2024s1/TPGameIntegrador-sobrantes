@@ -16,12 +16,13 @@ object juego {
 	method pasarSiguienteNivel(){ //Saca el nivel actual y pone el siguiente y si no hay siguiente finaliza el juego			
 			nivel+=1
 			game.clear()
-
+			sonido.iniciar()	
 			if(nivel== niveles.size()){self.finalizar()}else{self.ponerNivel(niveles.find{n=>n.nivelID()==nivel})}
 			}
 	
 	method finalizar(){
 		game.clear()
+		sonido.iniciar()	
 		game.addVisual(tablero)
 		final.mostrarTiempo()
 		final.mostrarPistas()
@@ -175,9 +176,11 @@ object juego {
 		
 		method iniciar(){
 		self.inicio()
-		if(not inicie){keyboard.enter().onPressDo{game.clear() self.jugar() inicie=true}}
+		if(not inicie){keyboard.enter().onPressDo{game.clear() self.jugar() inicie=true}}	
+		sonido.iniciar()
 		}//Se inicia el juego si se apreta enter por primera vez	
-		method jugar(){
+		method jugar(){	
+		sonido.iniciar()	
 		self.agregarNiveles()//Se agregan los niveles
 		self.ponerNivel(self.nivelAct())//Se pone el primer nivel
 		if (self.nivelAct().condicionesParaPasarDeNivel()){self.pasarSiguienteNivel()}
@@ -186,7 +189,4 @@ object juego {
 		
 		
 	
-//niv 3 ver cartel
-//niv 8 apenas empieza nivel
-//niv 7 arreglar tipito que agregue cartel
 
