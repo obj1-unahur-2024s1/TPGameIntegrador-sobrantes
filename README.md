@@ -17,11 +17,9 @@
 
 ## Reglas de Juego / Instrucciones
 
-(Escribirlas)
+El juego cuenta con un total de 12 niveles. Es un juego de rompecabezas que presenta un nivel repetido con diferentes soluciones en cada ronda. El objetivo es guiar al personaje hasta la puerta de salida, resolviendo el rompecabezas de cada nivel.
 
 
 ## Otros
 
-- Curso/Facultad
-- Versión de wollok
-- Una vez terminado, no tenemos problemas en que el repositorio sea público / queremos manternerlo privado
+- Programacion Con Objetos 1 / comision 1/ Universidad Nacional de Hurlingham
