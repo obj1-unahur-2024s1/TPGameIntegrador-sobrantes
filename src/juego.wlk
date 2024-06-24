@@ -89,8 +89,8 @@ object juego {
 		,puertaAnt=new PuertaAnt(position=game.at(1,1)))
 		//LISTO NIVEL CON LAS TECLAS Y LOS APSECTOS DE LOS OBJETOS CAMBIADOS
 		method nivel5()= new NivelComun(perAct= new PerGral(imagen="tipitoDer.png",position=game.at(2,1)),
-		botAct=new BotonPuerta( imagen="puerta0.png", position =game.at(1,7)),
-		puertaAct=new PuertaBoton(imagen="boton0.png", position=game.at(14,3)),
+		botAct=new BotonPuerta( imagen="puerta0.png", position =game.at(14,3)),
+		puertaAct=new PuertaBoton(imagen="boton0.png", position=game.at(1,7)),
 		nivelID= 5,
 		teclas=new BotonesParaMover(izquierda=keyboard.d(),derecha=keyboard.a(),arriba=keyboard.s(),abajo=keyboard.w())
 		,cartelPistaAct=new CartelPista()
@@ -135,6 +135,13 @@ object juego {
 		teclas=new BotonesParaMover(izquierda=keyboard.a(),derecha=keyboard.d(),arriba=keyboard.w(),abajo=keyboard.s())
 		,cartelPistaAct=new CartelPista()
 		,puertaAnt=new PuertaAnt(position=game.at(1,1)))
+		method nivel11()=new NivSilencio(perAct= new PerGral(imagen="tipitoDer.png",position=game.at(2,1)),
+		botAct=new BotGral( imagen="boton0.png", position =game.at(6,10)),
+		puertaAct=new PuertaGral(imagen="puerta0.png", position=game.at(14,3)),
+		nivelID= 11,
+		teclas=new BotonesParaMover(izquierda=keyboard.a(),derecha=keyboard.d(),arriba=keyboard.w(),abajo=keyboard.s())
+		,cartelPistaAct=new CartelPista()
+		,puertaAnt=new PuertaAnt(position=game.at(1,1)))
 	
 	method agregarNiveles(){//Se agregan los niveles a la lista de niveles
 		self.agregarNivel(self.nivel0())
@@ -147,7 +154,8 @@ object juego {
 		self.agregarNivel(self.nivel7())
 		self.agregarNivel(self.nivel8())
 		self.agregarNivel(self.nivel9())
-		self.agregarNivel(self.nivel10())
+		self.agregarNivel(self.nivel10()) 
+		self.agregarNivel(self.nivel11()) 
 	}
 	
 	

@@ -68,7 +68,7 @@ game.whenCollideDo(self.botAct(),{o=>if(o.puedeTocarBoton()){self.botAct().cambi
 self.pasarDeNivel()
 keyboard.r().onPressDo({self.resetNivel() contReset.sumarReset()})
 }
-method objetos()=[tablero,botAct,new CartelNivel(),puertaAct,puertaAnt,perAct,cartelPistaAct,tiempoU,tiempoC,tiempoD,tiempoM]//objetos que contiene el juego y se va a geregar	
+method objetos()=[tablero,botAct,new CartelNivel(),puertaAct,puertaAnt,perAct,cartelPistaAct,tiempoU,tiempoC,tiempoD,tiempoM,cartelMute]//objetos que contiene el juego y se va a geregar	
 }
 
 //TIPOS DE NIVELES QUE HEREDAN DE LA SUPERCLASE NIVEL COMUN Y SE MODIFICAN LOS METODOS NECESARIOS
@@ -114,7 +114,7 @@ class NivelPista inherits NivelComun{
 
 //Se modificó el orden de addVisuals de los objetos para que las cajas queden detrás del tablero y así dar una sensación de invisibilidad
 class NivelCajasInvisibles inherits NivelComun{
-override method objetos()=[tablero,new CartelNivel(),botAct,puertaAct,puertaAnt,perAct,cartelPistaAct,tiempoU,tiempoD,tiempoC,tiempoM]
+override method objetos()=[tablero,new CartelNivel(),botAct,puertaAct,puertaAnt,perAct,cartelPistaAct,tiempoU,tiempoD,tiempoC,tiempoM,cartelMute]//cartelMute]
 override method estructuraNivel(){
 self.movimiento(perAct)
 self.pista()
@@ -131,6 +131,11 @@ class NivPerInvisible inherits NivelComun{
 	}
 }
 
-
+class NivSilencio inherits NivelComun{
+	override method estructuraNivel(){  
+		super()
+		if(sonido.estaDetenida()){puertaAct.cambiarEstado()}
+		keyboard.m().onPressDo({if(sonido.estaDetenida()){puertaAct.cambiarEstado()}else{puertaAct.resetear()}})}
+}
 
 

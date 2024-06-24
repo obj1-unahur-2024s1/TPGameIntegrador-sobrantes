@@ -181,8 +181,6 @@ class PuertaReinicio inherits PuertaGral{
 }	
 
 
-
-
 //OTROS OBJETOS
 
 //Objeto tablero del fondo, es siempre el mismo, con las mismas propiedades.
@@ -499,9 +497,19 @@ object sonido{
 	musica.shouldLoop(true)
 	musica.volume(0.2)
 	if(primeraVez){
-		game.schedule(500, { musica.play()}) primeraVez=false
-		keyboard.m().onPressDo({if(detenida){self.reanudar()}else{self.detener()}})
-	}else{keyboard.m().onPressDo({if(detenida){self.reanudar()}else{self.detener()}})}}
+		game.schedule(500, { musica.play()}) primeraVez=false self.controlesPausa()
+		}else{self.controlesPausa()}}
 	method detener(){musica.pause() detenida = true}
 	method reanudar(){musica.resume() detenida = false}
+	method musicaDetenida()= detenida
+	method controlesPausa(){
+		keyboard.m().onPressDo({if(detenida){self.reanudar()}else{self.detener()}})
+	}
+	method estaDetenida()=detenida
 }
+
+
+object cartelMute{
+	const property position= game.at(0,0)
+	const property image= "mute.png"
+	}
