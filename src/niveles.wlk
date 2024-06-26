@@ -114,7 +114,7 @@ class NivelPista inherits NivelComun{
 
 //Se modificó el orden de addVisuals de los objetos para que las cajas queden detrás del tablero y así dar una sensación de invisibilidad
 class NivelCajasInvisibles inherits NivelComun{
-override method objetos()=[tablero,new CartelNivel(),botAct,puertaAct,puertaAnt,perAct,cartelPistaAct,tiempoU,tiempoD,tiempoC,tiempoM,cartelMute]//cartelMute]
+override method objetos()=[tablero,new CartelNivel(),botAct,puertaAct,puertaAnt,perAct,cartelPistaAct,tiempoU,tiempoD,tiempoC,tiempoM,cartelMute]
 override method estructuraNivel(){
 self.movimiento(perAct)
 self.pista()

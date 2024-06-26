@@ -9,7 +9,6 @@ program game {
  	game.cellSize(100)
   	game.title("Loop")
   	juego.iniciar()
-  	
   	game.start()
 
 }

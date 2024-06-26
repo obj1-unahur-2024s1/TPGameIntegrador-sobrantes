@@ -305,6 +305,7 @@ object segundero{
 		
 		})}
 	method segundos()=segundos	
+	method reiniciar(){segundos=0}
 	}
 
  //PANTALLA DE INICIO
@@ -342,11 +343,13 @@ object contPistas{
 	var cantPistas=0
 	method sumarPista(){cantPistas+=1}
 	method pistasTotales() = cantPistas
+	method reiniciar(){cantPistas=0}
 }	
 object contReset{
 	var cantReset=0
 	method sumarReset(){cantReset+=1}
 	method resetTotales() = cantReset
+	method reiniciar(){cantReset=0}
 }	
 
 
@@ -513,3 +516,16 @@ object cartelMute{
 	const property position= game.at(0,0)
 	const property image= "mute.png"
 	}
+object cartelExit{
+	const property position= game.at(0,0)
+	const property image= "exit.png"
+}
+object cartelReinicio{
+	const property position= game.at(0,0)
+	const property image= "cartelReinicio.png"
+}
+
+object cartelTutorial{
+	const property position= game.at(0,0)
+	const property image= "explicacion.png"
+}

@@ -8,9 +8,9 @@ import objetos.*
 object juego {
 	
 	const property niveles=[]//Lista con todos los niveles
-	var property nivel=0	//Numero de nivel actual
-	var property inicie = false//Bandera utilizada para saber si ya inicé el juego o no
-
+	var nivel=0	//Numero de nivel actual
+	var inicie = false//Bandera utilizada para saber si ya inicé el juego o no
+	var estoyEnFinal= false //Bandera utilizada para saber si estoy en el final del juego
 	
 	method nivelAct()= niveles.find{n=>n.nivelID()==nivel}//Retorna el nivel actual
 	method pasarSiguienteNivel(){ //Saca el nivel actual y pone el siguiente y si no hay siguiente finaliza el juego			
@@ -19,17 +19,22 @@ object juego {
 			sonido.iniciar()	
 			if(nivel== niveles.size()){self.finalizar()}else{self.ponerNivel(niveles.find{n=>n.nivelID()==nivel})}
 			}
-	
+	method nivel()=nivel
 	method finalizar(){
 		game.clear()
-		sonido.iniciar()	
+		sonido.iniciar()
 		game.addVisual(tablero)
+		game.addVisual(cartelExit)
+		game.addVisual(cartelReinicio)	
 		final.mostrarTiempo()
 		final.mostrarPistas()
 		final.mostrarReset()
 		final.agregarMedallas()
 		final.agregarPantallaFinal()
-		
+		estoyEnFinal=true
+		nivel=0
+		keyboard.q().onPressDo{game.stop()}
+		keyboard.enter().onPressDo{self.reiniciarJuego()}
 		
 	}//Finaliza el juego *TERMINAR*
 	method ponerNivel(niv){ //Pone el nivel en pantalla que se le pase por parametro
@@ -37,6 +42,7 @@ object juego {
 		niv.objetos().forEach{o=>game.addVisual(o)}//Se agregan los objetos del nivel
 		self.nivelAct().estructuraNivel()//Se define la estructura del nivel actual
 		segundero.comenzarSegundero()//se agrega y comienza el segundero
+		if (niv.nivelID()==0){segundero.reiniciar()}
 	}
 
 	
@@ -158,12 +164,19 @@ object juego {
 		self.agregarNivel(self.nivel11()) 
 	}
 	
-	
+	method tutorial(){
+		game.clear()
+		game.addVisual(cartelTutorial)
+		keyboard.enter().onPressDo{self.jugar()}	
+	}
 	
 	method inicio(){ //Estructura de la pantalla de inicio
+		//var primerEnter=true
+		keyboard.q().onPressDo{game.stop()}
 		game.addVisual(fondoInicio)
-		game.addVisual(teclasInicio)
+		game.addVisual(cartelExit)
 		var fotograma=0
+		keyboard.enter().onPressDo{self.tutorial()}	
 		game.addVisual(pantallaInicio)
 		game.onTick(200,"cambioInicio",{
 			fotograma +=1
@@ -181,15 +194,27 @@ object juego {
 				})
 			
 			}
-		
+		method reiniciarJuego(){
+			game.clear()
+			inicie=false 
+			estoyEnFinal=false
+			self.niveles().clear()
+			contPistas.reiniciar()
+			contReset.reiniciar()
+			self.inicio()
+			}
 		method iniciar(){
+		
 		self.inicio()
-		if(not inicie){keyboard.enter().onPressDo{game.clear() self.jugar() inicie=true}}	
 		sonido.iniciar()
 		}//Se inicia el juego si se apreta enter por primera vez	
-		method jugar(){	
+		method jugar(){
+		self.agregarNiveles()	
+		inicie=true
+		game.clear() 
 		sonido.iniciar()	
-		self.agregarNiveles()//Se agregan los niveles
+		//sonido.iniciar()	
+		//Se agregan los niveles
 		self.ponerNivel(self.nivelAct())//Se pone el primer nivel
 		if (self.nivelAct().condicionesParaPasarDeNivel()){self.pasarSiguienteNivel()}
 		}}	//Si estan las condiciones para pasar de nivel se pasa al siguiente
